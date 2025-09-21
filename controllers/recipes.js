@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Recipes = require("../models/recipe");
+const Ingredients = require('../models/ingredient');
 const User = require('../models/user');
 const { route } = require('./auth');
 
@@ -17,8 +18,14 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/new', (req,res) => {
-    res.render('recipes/new.ejs')
+router.get('/new', async (req, res) => {
+  try {
+    const ingredients = await Ingredients.find({});
+    res.render('recipes/new', { ingredients });
+  } catch (error) {
+    console.error(error);
+    res.redirect('/recipes');
+  }
 });
 
 router.post('/', async (req,res) => {

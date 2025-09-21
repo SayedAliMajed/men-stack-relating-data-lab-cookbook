@@ -2,8 +2,10 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 const express = require('express');
+const path = require('path');
 
 const app = express();
+app.set('view engine', 'ejs');
 
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
@@ -28,7 +30,7 @@ mongoose.connection.on('connected', () => {
 });
 
 // MIDDLEWARE
-//
+app.use(express.static(path.join(__dirname, 'public')));
 // Middleware to parse URL-encoded data from forms
 app.use(express.urlencoded({ extended: false }));
 // Middleware for using HTTP verbs such as PUT or DELETE

@@ -14,11 +14,11 @@ owner: {
     ref: "User",
     required: true,
 },
-ingredients: {
+ingredients: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Ingredient ",
     required: false,
-}
+}]
 });
 
 const Recipes = mongoose.model('Recipes', recipeSchema);
