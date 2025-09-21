@@ -10,16 +10,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SEB-PT-6-Solutions/MEN-AUTH-TEMPLATE.git"
+    "url": "git+https://github.com/SayedAliMajed/men-stack-relating-data-lab-cookbook"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/SEB-PT-6-Solutions/MEN-AUTH-TEMPLATE/issues"
+    "url": "https://github.com/SayedAliMajed/men-stack-relating-data-lab-cookbook/issues"
   },
-  "homepage": "https://github.com/SEB-PT-6-Solutions/MEN-AUTH-TEMPLATE#readme",
+  "homepage": "https://github.com/SayedAliMajed/men-stack-relating-data-lab-cookbook#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "connect-mongo": "^5.1.0",
