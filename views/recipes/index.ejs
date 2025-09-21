@@ -13,6 +13,8 @@
       <% if (recipes && recipes.length > 0) { %>
       <% recipes.forEach((recipe) => { %>
       <a href="/recipes/<%= recipe._id %>"><%= recipe.name %></a>
+      <!-- Edit link -->
+      <a href="/recipes/<%= recipe._id %>/edit">Edit</a>
       <% }) %>
       <% } else { %>
       <p>You have not created any recipes yet.</p>

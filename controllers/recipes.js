@@ -64,16 +64,34 @@ router.delete('/:recipeId', async (req,res) => {
     }
 });
 
+// Edit
 router.get('/:recipeId/edit', async (req,res) => {
     try {
         const currentRecipe = await Recipes.findById(req.params.recipeId);
-        res.render('recipes/edit.ejs')
+        res.render('recipes/edit.ejs', { recipe: currentRecipe})
 
     } catch(error) {
         console.log(error);
         res.redirect('/')
     }
-})
+});
+
+router.put('/:recipeId', async (req,res) => {
+    try {
+        const currentRecipe = await Recipes.findById(req.params.recipeId);
+        if (currentRecipe.owner.equals(req.session.user._id)) {
+            Object.assign(currentRecipe, req.body);
+            await currentRecipe.save();
+            res.redirect(`/recipes/${req.params.recipeId}`);
+        } else {
+            console.log('Permission denied')
+        }
+
+    } catch(error) {
+        console.log(error);
+        res.redirect('/');
+    }
+});
 
 
 module.exports = router;
