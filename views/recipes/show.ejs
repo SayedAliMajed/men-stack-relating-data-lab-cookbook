@@ -7,7 +7,13 @@
 </head>
 <body>
     <%- include('../partials/_navbar.ejs') %>
-    <h1>  <%= recipe.name %> , Recipe Details: </h1>
+    <h1>  <%= recipe.name %>  </h1>
+    <h2> Recipe Details:</h2>
+    <p><strong> Instructions:</strong><%= recipe.instructions %></p>
+    <form action="/recipes/<%= recipe._id%>?_method=DELETE" method="post">
+        <button type="submit"> Delete This Recipe</button>
+
+    </form>
 
 </body>
 </html>
