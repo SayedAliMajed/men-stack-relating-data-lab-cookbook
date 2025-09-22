@@ -6,8 +6,9 @@
     <title>Ingredients</title>
 </head>
 <body>
-    <h1>Ingredients</h1>
-
+<h1>Ingredients</h1>
+   <a href="/recipes/new">Back to Add Recipe</a> |
+   <a href="/recipes">View All Recipes</a>
 <ul>
   <% ingredients.forEach(ingredient => { %>
     <li><%= ingredient.name %></li>
@@ -15,9 +16,10 @@
 </ul>
 
 <form action="/ingredients" method="POST">
-  <input type="text" name="name" placeholder="New ingredient" required />
+  <input name="name" placeholder="New Ingredient" required />
   <button type="submit">Add Ingredient</button>
 </form>
+
 
 </body>
 </html>

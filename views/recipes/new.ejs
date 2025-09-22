@@ -1,30 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="/style.css" />
-  <title>Add new recipe</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New Recipe</title>
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-  <%- include('../partials/_navbar.ejs') %>
+   <%- include('../partials/_navbar') %>
 
-  <h1>Add New Recipe</h1>
-  <form action="/recipes" method="post">
-    <label for="name">Name:</label>
-    <input type="text" name="name" id="name" />
+<h1>Add New Recipe</h1>
 
-    <label for="instructions">Instructions:</label>
-    <textarea name="instructions" rows="4" cols="50" placeholder="Enter instructions"></textarea>
+<form action="/recipes" method="POST">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" placeholder="Recipe name" required />
 
-    <label for="ingredients">Ingredients:</label>
-    <select name="ingredients" id="ingredients" multiple size="5">
-      <% ingredients.forEach(ingredient => { %>
-        <option value="<%= ingredient._id %>"><%= ingredient.name %></option>
-      <% }) %>
-    </select>
+  <label for="instructions">Instructions:</label>
+  <textarea id="instructions" name="instructions" placeholder="Enter instructions" rows="6" required></textarea>
 
-    <button type="submit">Add Recipe</button>
-  </form>
+  <label for="ingredients">Ingredients:</label>
+  <select name="ingredients" id="ingredients" multiple size="10" required>
+    <% ingredients.forEach(ingredient => { %>
+      <option value="<%= ingredient._id %>"><%= ingredient.name %></option>
+    <% }) %>
+  </select>
+
+  <button type="submit">Add Recipe</button>
+</form>
+
+<h3>Add New Ingredient</h3>
+
+<form id="add-ingredient-form" action="/ingredients?redirect=/recipes/new" method="POST">
+  <input type="text" name="name" placeholder="New ingredient name" required />
+  <button type="submit">Add Ingredient</button>
+</form>
+
 </body>
 </html>

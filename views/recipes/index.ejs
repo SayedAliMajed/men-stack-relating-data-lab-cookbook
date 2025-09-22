@@ -8,10 +8,12 @@
   <body>
     <%- include('../partials/_navbar.ejs') %>
     <h1>Welcome to My Recipes</h1>
+    
+
     <a href="/recipes/new"> Add New Recipe</a>
     <ul>
-      <% if (recipes && recipes.length > 0) { %>
-      <% recipes.forEach((recipe) => { %>
+      <% if (recipe && recipe.length > 0) { %>
+      <% recipe.forEach((recipe) => { %>
       <a href="/recipes/<%= recipe._id %>"><%= recipe.name %></a>
       <!-- Edit link -->
       <a href="/recipes/<%= recipe._id %>/edit">Edit</a>

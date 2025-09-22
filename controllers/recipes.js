@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-const Recipes = require("../models/recipe");
-const Ingredients = require('../models/ingredient');
+const Recipe = require("../models/recipe");
+const Ingredient = require('../models/ingredient');
 const User = require('../models/user');
 const { route } = require('./auth');
 
 router.get('/', async (req, res) => {
     try {
         const ownerId =  req.session.user._id;
-        const populatedRecipes = await Recipes.find({owner:ownerId}).populate('owner');
-        res.render('recipes/index.ejs', {recipes: populatedRecipes});
+        const populatedRecipes = await Recipe.find({owner:ownerId}).populate('owner');
+        res.render('recipes/index.ejs', {recipe: populatedRecipes});
         
     } catch (error){
         console.log(error);
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 
 router.get('/new', async (req, res) => {
   try {
-    const ingredients = await Ingredients.find({});
+    const ingredients = await Ingredient.find({});
     res.render('recipes/new', { ingredients });
   } catch (error) {
     console.error(error);
@@ -32,8 +32,11 @@ router.post('/', async (req,res) => {
 
     try {
         req.body.owner = req.session.user._id;
-        await Recipes.create(req.body);
+        await Recipe.create(req.body);
+        console.log(req.body.name);
         res.redirect('/recipes');
+        
+
     } catch (error) {
         console.log(error);
         res.redirect('/');
@@ -43,7 +46,7 @@ router.post('/', async (req,res) => {
 // show page
 router.get('/:recipeId', async (req,res) => {
     try {
-        const populatedRecipes = await Recipes.findById(req.params.recipeId).populate("owner");
+        const populatedRecipes = await Recipe.findById(req.params.recipeId).populate("owner");
         res.render('recipes/show.ejs', {
             recipe: populatedRecipes,
         });
@@ -57,7 +60,7 @@ router.get('/:recipeId', async (req,res) => {
 
 router.delete('/:recipeId', async (req,res) => {
     try {
-        const recipe = await Recipes.findById(req.params.recipeId);
+        const recipe = await Recipe.findById(req.params.recipeId);
         if(recipe.owner.equals(req.session.user._id)) {
             await recipe.deleteOne();
             res.redirect('/recipes');
@@ -72,24 +75,27 @@ router.delete('/:recipeId', async (req,res) => {
 });
 
 // Edit
-router.get('/:recipeId/edit', async (req,res) => {
-    try {
-        const currentRecipe = await Recipes.findById(req.params.recipeId);
-        res.render('recipes/edit.ejs', { recipe: currentRecipe})
-
-    } catch(error) {
-        console.log(error);
-        res.redirect('/')
-    }
+router.get('/:recipeId/edit', async (req, res) => {
+  try {
+    const currentRecipe = await Recipe.findById(req.params.recipeId);
+    const ingredients = await Ingredient.find({});
+    res.render('recipes/edit.ejs', { recipe: currentRecipe, ingredients });
+  } catch (error) {
+    console.log(error);
+    res.redirect('/');
+  }
 });
+
 
 router.put('/:recipeId', async (req,res) => {
     try {
-        const currentRecipe = await Recipes.findById(req.params.recipeId);
+        const currentRecipe = await Recipe.findById(req.params.recipeId);
         if (currentRecipe.owner.equals(req.session.user._id)) {
             Object.assign(currentRecipe, req.body);
             await currentRecipe.save();
             res.redirect(`/recipes/${req.params.recipeId}`);
+            console.log(req.body);
+
         } else {
             console.log('Permission denied')
         }

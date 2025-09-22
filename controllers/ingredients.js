@@ -1,26 +1,37 @@
 const express = require('express');
 const router = express.Router();
 
-const Ingredients = require('../models/ingredient');
+const Ingredient = require('../models/ingredient');
 
-router.get('/', async (requestAnimationFrame, res) => {
-    const ingredients = await Ingredients.find({});
-    res.render('ingredients/index.ejs', {ingredient: ingredients});
-});
-
-// Create
-router.post('/', async (req,res) => {
+router.get('/', async (req, res) => {
     try {
-        const existing = await ingredients.findOne({name: req.body.name.toLowerCase()});
-        if (existing) {
-            return res.redirect('/ingredients');
-        }
-        await Ingredients.create({name: req.body.toLowerCase()});
-        res.redirect('/ingredients');
-    } catch(error){
+    const ingredients = await Ingredient.find({});
+    res.render('ingredients/index.ejs', {ingredients: ingredients});
+    } catch(error) {
         console.log(error);
-        res.redirect('/');
+        redirect('/');
     }
 });
+
+
+// Create
+router.post('/', async (req, res) => {
+  try {
+    const existing = await Ingredient.findOne({ name: req.body.name.trim().toLowerCase() });
+    if (existing) {
+      const redirect = req.query.redirect || '/ingredients';
+      return res.redirect(redirect);
+    }
+
+    await Ingredient.create({ name: req.body.name.trim().toLowerCase() });
+
+    const redirect = req.query.redirect || '/ingredients';
+    res.redirect(redirect);
+  } catch (error) {
+    console.error(error);
+    res.redirect('/ingredients');
+  }
+});
+
 
 module.exports = router;
