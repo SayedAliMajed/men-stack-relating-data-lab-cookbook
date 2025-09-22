@@ -46,7 +46,9 @@ router.post('/', async (req,res) => {
 // show page
 router.get('/:recipeId', async (req,res) => {
     try {
-        const populatedRecipes = await Recipe.findById(req.params.recipeId).populate("owner");
+        const populatedRecipes = await Recipe.findById(req.params.recipeId)
+        .populate('owner')
+        .populate('ingredients')
         res.render('recipes/show.ejs', {
             recipe: populatedRecipes,
         });
@@ -94,7 +96,7 @@ router.put('/:recipeId', async (req,res) => {
             Object.assign(currentRecipe, req.body);
             await currentRecipe.save();
             res.redirect(`/recipes/${req.params.recipeId}`);
-            console.log(req.body);
+           
 
         } else {
             console.log('Permission denied')

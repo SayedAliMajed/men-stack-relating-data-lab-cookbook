@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+
     <title>My Recipes</title>
   </head>
   <body>
@@ -11,7 +13,7 @@
     
 
     <a href="/recipes/new"> Add New Recipe</a>
-    <ul>
+    <ul class="recipe-list">
       <% if (recipe && recipe.length > 0) { %>
       <% recipe.forEach((recipe) => { %>
       <a href="/recipes/<%= recipe._id %>"><%= recipe.name %></a>

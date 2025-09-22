@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css" />
+
     <title><%= recipe.owner.username%> recipes</title>
 </head>
 <body>
@@ -10,6 +12,17 @@
     <h1>  <%= recipe.name %>  </h1>
     <h2> Recipe Details:</h2>
     <p><strong> Instructions:</strong><%= recipe.instructions %></p>
+    <p><strong> Ingredients </strong></p>
+<ul class="ingredients-list">
+  <% if (recipe.ingredients && recipe.ingredients.length > 0) { %>
+    <% recipe.ingredients.forEach(ingredient => { %>
+      <li><%= ingredient.name %></li>
+    <% }); %>
+  <% } else { %>
+    <li>No ingredients added yet.</li>
+  <% } %>
+</ul>
+
     <form action="/recipes/<%= recipe._id%>?_method=DELETE" method="post">
         <button type="submit"> Delete This Recipe</button>
 
